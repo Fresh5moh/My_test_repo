@@ -11,6 +11,9 @@
   tasks:
     - name: run container
       shell: docker run -dit -v /root/jenkins_test/slave_jenkins/custom_check:/host -p 80:80 --name test_container centos; sleep 5
+      register: docker_run
+    - debug:
+        msg: "{{docker_run}}"
     - name: Running scripts inside container
       command: docker exec "{{ conainer_name }}" "{{ python_script }}" "{{ path_to_run }}" "{{ var_to_pass }}" #python2 /host/python_test.py
       register: container_run
