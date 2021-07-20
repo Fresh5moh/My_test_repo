@@ -20,3 +20,9 @@
       register: container_run
     - debug:
         msg: "{{ container_run }}"
+
+    - name: stoppng container
+      shell: docker rm -f "{{ conainer_name }}"
+      register: stop_cont
+    - debug:
+        msg: "{{stop_cont}}"
