@@ -1,0 +1,18 @@
+---
+#- hosts: tag_environment_{{ environ  }}:&tag_product_{{ product }}:&tag_stack_{{ stack }}
+- hosts: localhost
+  user: devopsuser
+  become: yes
+  vars:
+    path_to_run: "{{ script_path }}"
+    python_script: "{{ which_python }}"
+    var_to_pass : "{{ pass_variable }}"
+    sh_script: "/usr/bin/sh"
+  tasks:
+    - name: run container
+      shell: docker run -dit -p 80:80 --name test_container centos; sleep 5
+    - name: Running scripts inside container
+      command: docker exec "{{ conainer_name }}" "{{ python_script }}" "{{ path_to_run }}" "{{ var_to_pass }}" #python2 /host/python_test.py
+      register: container_run
+    - debug:
+        msg: "{{ container_run }}"
