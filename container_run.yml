@@ -9,8 +9,11 @@
     var_to_pass : "{{ pass_variable }}"
     sh_script: "/usr/bin/sh"
   tasks:
+    - name: Install python2
+
     - name: run container
       shell: docker run -dit -v /root/jenkins_test/slave_jenkins/custom_check:/host -p 80:80 --name test_container centos; sleep 5
+      shell: docker exec -i "{{ conainer_name }}" sh -c "yum install -y python2"; sleep 5
       register: docker_run
     - debug:
         msg: "{{docker_run}}"
