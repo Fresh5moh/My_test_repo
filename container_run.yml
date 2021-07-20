@@ -10,7 +10,7 @@
     sh_script: "/usr/bin/sh"
   tasks:
     - name: run container
-      shell: docker run -dit -p 80:80 --name test_container centos; sleep 5
+      shell: docker run -dit -v custom_check:/host -p 80:80 --name test_container centos; sleep 5
     - name: Running scripts inside container
       command: docker exec "{{ conainer_name }}" "{{ python_script }}" "{{ path_to_run }}" "{{ var_to_pass }}" #python2 /host/python_test.py
       register: container_run
